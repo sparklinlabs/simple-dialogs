@@ -13,5 +13,5 @@ spawn(`stylus${suffix}`, watchArgs.concat([ `${__dirname}/src/index.styl`, "--ou
 
 spawn(`tsc${suffix}`, [ "-p", `${__dirname}/src` ], spawnOptions).on("close", () => {
   if (watchMode) spawn(`tsc${suffix}`, watchArgs.concat([ "-p", `${__dirname}/src` ]), spawnOptions);
-  spawn(`${bundler}${suffix}`, [ `${__dirname}/src/index.js`, "-s", "SimpleDialogs", "-o", `${__dirname}/lib/SimpleDialogs.js` ], spawnOptions);
+  spawn(`${bundler}${suffix}`, [ `${__dirname}/src/index.js`, "-s", "SimpleDialogs", "-p", "browserify-derequire", "-o", `${__dirname}/lib/SimpleDialogs.js` ], spawnOptions);
 });

@@ -1,8 +1,8 @@
 {
   "name": "simple-dialogs",
   "description": "Non-blocking HTML5 dialogs",
-  "version": "1.0.0",
-  "author": "Elisée Maurer <elisee@sparklinlabs.com>",
+  "version": "1.0.1",
+  "author": "Nicolas Gauthier <nicolas.gauthier84@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/sparklinlabs/simple-dialogs"
@@ -30,6 +30,7 @@
     "jade": "~1.11.0",
     "stylus": "~0.53.0",
     "typescript": "~1.7.5",
-    "watchify": "~3.7.0"
+    "watchify": "~3.7.0",
+    "browserify-derequire": "~0.9.4"
   }
 }
