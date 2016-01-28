@@ -1,0 +1,57 @@
+doctype html
+html
+  head
+    link(rel="stylesheet",href="index.css")
+    script(src="SimpleDialogs.js")
+  body
+    header
+      h1
+        a(href="https://github.com/sparklinlabs") sparklinlabs
+        |  / 
+        a(href="https://github.com/sparklinlabs/simple-dialogs") simple-dialogs
+      p Non-blocking HTML5 dialogs
+    main
+      button.confirm Confirm
+      button.info Info
+      button.prompt Prompt
+      button.select Select
+    script.
+      var confirmElt = document.querySelector("button.confirm");
+      confirmElt.addEventListener("click", function() {
+        var confirmOptions = {
+          validationLabel: "Yes",
+          cancelLabel: "No"
+        }
+        new SimpleDialogs.ConfirmDialog("Is it rainy today?", confirmOptions, function(result) { console.log(result); })
+      })
+
+      var infoElt = document.querySelector("button.info");
+      infoElt.addEventListener("click", function() {
+        var infoOptions = {
+          closeLabel: "Thanks! You too!"
+        }
+        new SimpleDialogs.InfoDialog("You look stunning today!", infoOptions, function(result) { console.log(result); })
+      })
+
+      var promptElt = document.querySelector("button.prompt");
+      promptElt.addEventListener("click", function() {
+        var promptOptions = {
+          validationLabel: "There you go",
+          cancelLabel: "Not your concern"
+        }
+        new SimpleDialogs.PromptDialog("How many fingers do you have?", promptOptions, function(result) { console.log(result); })
+      })
+
+      var selectElt = document.querySelector("button.select");
+      selectElt.addEventListener("click", function() {
+        var selectChoices = {
+          "little": "A little?",
+          "decent": "A good amount",
+          "enjoy": "You enjoyed it!",
+          "tooMuch": "Wayyyy too much!"
+        }
+        var selectOptions = {
+          size: 3
+        }
+        new SimpleDialogs.SelectDialog("How much fun did I have building this demo?", selectChoices, selectOptions, function(result) { console.log(result); })
+      })

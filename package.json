@@ -1,0 +1,35 @@
+{
+  "name": "simple-dialogs",
+  "description": "Non-blocking HTML5 dialogs",
+  "version": "1.0.0",
+  "author": "Elisée Maurer <elisee@sparklinlabs.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sparklinlabs/simple-dialogs"
+  },
+  "license": "ISC",
+  "main": "./lib/SimpleDialogs.js",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js -w",
+    "start": "http-server lib"
+  },
+  "keywords": [
+    "dialogs",
+    "client",
+    "html5",
+    "browser",
+    "prompt",
+    "confirm",
+    "select",
+    "info",
+    "alert"
+  ],
+  "devDependencies": {
+    "http-server": "~0.8.5",
+    "jade": "~1.11.0",
+    "stylus": "~0.53.0",
+    "typescript": "~1.7.5",
+    "watchify": "~3.7.0"
+  }
+}
