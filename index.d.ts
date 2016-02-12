@@ -1,6 +1,7 @@
 declare namespace SimpleDialogs {
   export function cancelDialogIfAny(): void;
   export abstract class BaseDialog<T> {
+    static activeDialog: BaseDialog<any>;
     static defaultLabels: { [key: string]: string };
 
     protected dialogElt: HTMLDivElement;
