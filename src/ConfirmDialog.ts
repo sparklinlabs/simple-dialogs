@@ -1,6 +1,7 @@
 import BaseDialog from "./BaseDialog";
 
 interface ConfirmOptions {
+  header?: string;
   validationLabel?: string;
   cancelLabel?: string;
 }
@@ -11,9 +12,16 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
     super(callback);
     if (options == null) options = {};
 
-    const labelElt = document.createElement("label");
-    labelElt.textContent = label;
-    this.formElt.appendChild(labelElt);
+    if (options.header != null) {
+      const header = document.createElement("header");
+      header.textContent = options.header;
+      this.formElt.appendChild(header);
+    }
+
+    const promptElt = document.createElement("div");
+    promptElt.className = "group";
+    promptElt.textContent = label;
+    this.formElt.appendChild(promptElt);
 
     // Buttons
     const buttonsElt = document.createElement("div");

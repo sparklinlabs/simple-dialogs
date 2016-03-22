@@ -16,7 +16,7 @@ body {
 a { color: #00f; }
 a:hover { text-decoration: none; }
 
-header {
+body > header {
   padding: 1em;
   display: flex;
   align-items: center;
@@ -56,13 +56,20 @@ main {
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
   }
 
-  label, input, select, .group { margin-bottom: 0.5em; }
+  header {
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .group { margin-bottom: 0.5em; }
+
   input, select, textarea { padding: 0.125em 0.25em; }
 
   .buttons {
     display: flex;
     justify-content: flex-end;
 
-    button { margin-left: 5px; }
+    > button, > .button-strip { margin-left: 5px; }
   }
 }

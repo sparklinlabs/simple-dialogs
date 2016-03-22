@@ -1,6 +1,7 @@
 import BaseDialog from "./BaseDialog";
 
 interface SelectOptions {
+  header?: string;
   validationLabel?: string;
   cancelLabel?: string;
   size?: number;
@@ -14,13 +15,24 @@ export default class SelectDialog extends BaseDialog<SelectResult> {
     super(callback);
     if (options == null) options = {};
 
-    // Label
-    const labelElt = document.createElement("label");
-    labelElt.textContent = label;
-    this.formElt.appendChild(labelElt);
+    if (options.header != null) {
+      const header = document.createElement("header");
+      header.textContent = options.header;
+      this.formElt.appendChild(header);
+    }
+
+    const promptElt = document.createElement("div");
+    promptElt.className = "group";
+    promptElt.textContent = label;
+    this.formElt.appendChild(promptElt);
 
     // Select
+    const selectGroup = document.createElement("div");
+    selectGroup.className = "group";
+    this.formElt.appendChild(selectGroup);
+
     this.selectElt = document.createElement("select");
+    this.selectElt.style.width = "100%";
     for (const choiceName in choices) {
       const optionElt = document.createElement("option");
       optionElt.value = choiceName;
@@ -29,7 +41,7 @@ export default class SelectDialog extends BaseDialog<SelectResult> {
     }
 
     if (options.size != null) this.selectElt.size = options.size;
-    this.formElt.appendChild(this.selectElt);
+    selectGroup.appendChild(this.selectElt);
 
     this.selectElt.addEventListener("keydown", (event) => {
       if (event.keyCode === 13) { event.preventDefault(); this.submit(); }

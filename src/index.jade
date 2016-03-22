@@ -19,6 +19,7 @@ html
       var confirmElt = document.querySelector("button.confirm");
       confirmElt.addEventListener("click", function() {
         var confirmOptions = {
+          header: "Weather postcast",
           validationLabel: "Yes",
           cancelLabel: "No"
         }
@@ -28,6 +29,7 @@ html
       var infoElt = document.querySelector("button.info");
       infoElt.addEventListener("click", function() {
         var infoOptions = {
+          header: "Compliment dispenser",
           closeLabel: "Thanks! You too!"
         }
         new SimpleDialogs.InfoDialog("You look stunning today!", infoOptions, function(result) { console.log(result); })
@@ -36,6 +38,7 @@ html
       var promptElt = document.querySelector("button.prompt");
       promptElt.addEventListener("click", function() {
         var promptOptions = {
+          header: "Accounting",
           validationLabel: "There you go",
           cancelLabel: "Not your concern"
         }
@@ -51,7 +54,8 @@ html
           "tooMuch": "Wayyyy too much!"
         }
         var selectOptions = {
-          size: 3
+          header: "Enjoyment rating",
+          size: 4
         }
         new SimpleDialogs.SelectDialog("How much fun did I have building this demo?", selectChoices, selectOptions, function(result) { console.log(result); })
       })

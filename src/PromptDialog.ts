@@ -1,6 +1,7 @@
 import BaseDialog from "./BaseDialog";
 
 interface PromptOptions {
+  header?: string;
   validationLabel?: string;
   cancelLabel?: string;
   type?: string;
@@ -19,18 +20,31 @@ export default class PromptDialog extends BaseDialog<PromptResult> {
     super(callback);
     if (options == null) options = {};
 
-    const labelElt = document.createElement("label");
-    labelElt.textContent = label;
-    this.formElt.appendChild(labelElt);
+    if (options.header != null) {
+      const header = document.createElement("header");
+      header.textContent = options.header;
+      this.formElt.appendChild(header);
+    }
+
+    const promptElt = document.createElement("div");
+    promptElt.className = "group";
+    promptElt.textContent = label;
+    this.formElt.appendChild(promptElt);
+
+    const inputGroup = document.createElement("div");
+    inputGroup.className = "group";
+    this.formElt.appendChild(inputGroup);
 
     this.inputElt = document.createElement("input");
+    this.inputElt.style.width = "100%";
+
     if (options.type != null) this.inputElt.type = options.type;
     if (options.initialValue != null) this.inputElt.value = options.initialValue;
     if (options.placeholder != null) this.inputElt.placeholder = options.placeholder;
     if (options.pattern != null) this.inputElt.pattern = options.pattern;
     if (options.title != null) this.inputElt.title = options.title;
     this.inputElt.required = (options.required != null) ? options.required : true;
-    this.formElt.appendChild(this.inputElt);
+    inputGroup.appendChild(this.inputElt);
 
     // Buttons
     const buttonsElt = document.createElement("div");
