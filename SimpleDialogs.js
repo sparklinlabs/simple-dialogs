@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.SimpleDialogs = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.SimpleDialogs = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 var BaseDialog = (function () {
     function BaseDialog(callback) {
         var _this = this;
@@ -55,13 +55,13 @@ var BaseDialog = (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = BaseDialog;
 
-},{}],2:[function(require,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseDialog_1 = require("./BaseDialog");
+var BaseDialog_1 = _dereq_("./BaseDialog");
 var ConfirmDialog = (function (_super) {
     __extends(ConfirmDialog, _super);
     function ConfirmDialog(label, options, callback) {
@@ -69,9 +69,15 @@ var ConfirmDialog = (function (_super) {
         _super.call(this, callback);
         if (options == null)
             options = {};
-        var labelElt = document.createElement("label");
-        labelElt.textContent = label;
-        this.formElt.appendChild(labelElt);
+        if (options.header != null) {
+            var header = document.createElement("header");
+            header.textContent = options.header;
+            this.formElt.appendChild(header);
+        }
+        var promptElt = document.createElement("div");
+        promptElt.className = "group";
+        promptElt.textContent = label;
+        this.formElt.appendChild(promptElt);
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
@@ -101,22 +107,28 @@ var ConfirmDialog = (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ConfirmDialog;
 
-},{"./BaseDialog":1}],3:[function(require,module,exports){
+},{"./BaseDialog":1}],3:[function(_dereq_,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseDialog_1 = require("./BaseDialog");
+var BaseDialog_1 = _dereq_("./BaseDialog");
 var InfoDialog = (function (_super) {
     __extends(InfoDialog, _super);
     function InfoDialog(label, options, callback) {
         _super.call(this, callback);
         if (options == null)
             options = {};
-        var labelElt = document.createElement("label");
-        labelElt.textContent = label;
-        this.formElt.appendChild(labelElt);
+        if (options.header != null) {
+            var header = document.createElement("header");
+            header.textContent = options.header;
+            this.formElt.appendChild(header);
+        }
+        var promptElt = document.createElement("div");
+        promptElt.className = "group";
+        promptElt.textContent = label;
+        this.formElt.appendChild(promptElt);
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
@@ -132,13 +144,13 @@ var InfoDialog = (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = InfoDialog;
 
-},{"./BaseDialog":1}],4:[function(require,module,exports){
+},{"./BaseDialog":1}],4:[function(_dereq_,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseDialog_1 = require("./BaseDialog");
+var BaseDialog_1 = _dereq_("./BaseDialog");
 var PromptDialog = (function (_super) {
     __extends(PromptDialog, _super);
     function PromptDialog(label, options, callback) {
@@ -146,10 +158,20 @@ var PromptDialog = (function (_super) {
         _super.call(this, callback);
         if (options == null)
             options = {};
-        var labelElt = document.createElement("label");
-        labelElt.textContent = label;
-        this.formElt.appendChild(labelElt);
+        if (options.header != null) {
+            var header = document.createElement("header");
+            header.textContent = options.header;
+            this.formElt.appendChild(header);
+        }
+        var promptElt = document.createElement("div");
+        promptElt.className = "group";
+        promptElt.textContent = label;
+        this.formElt.appendChild(promptElt);
+        var inputGroup = document.createElement("div");
+        inputGroup.className = "group";
+        this.formElt.appendChild(inputGroup);
         this.inputElt = document.createElement("input");
+        this.inputElt.style.width = "100%";
         if (options.type != null)
             this.inputElt.type = options.type;
         if (options.initialValue != null)
@@ -161,7 +183,7 @@ var PromptDialog = (function (_super) {
         if (options.title != null)
             this.inputElt.title = options.title;
         this.inputElt.required = (options.required != null) ? options.required : true;
-        this.formElt.appendChild(this.inputElt);
+        inputGroup.appendChild(this.inputElt);
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
@@ -190,13 +212,13 @@ var PromptDialog = (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = PromptDialog;
 
-},{"./BaseDialog":1}],5:[function(require,module,exports){
+},{"./BaseDialog":1}],5:[function(_dereq_,module,exports){
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BaseDialog_1 = require("./BaseDialog");
+var BaseDialog_1 = _dereq_("./BaseDialog");
 var SelectDialog = (function (_super) {
     __extends(SelectDialog, _super);
     function SelectDialog(label, choices, options, callback) {
@@ -204,12 +226,21 @@ var SelectDialog = (function (_super) {
         _super.call(this, callback);
         if (options == null)
             options = {};
-        // Label
-        var labelElt = document.createElement("label");
-        labelElt.textContent = label;
-        this.formElt.appendChild(labelElt);
+        if (options.header != null) {
+            var header = document.createElement("header");
+            header.textContent = options.header;
+            this.formElt.appendChild(header);
+        }
+        var promptElt = document.createElement("div");
+        promptElt.className = "group";
+        promptElt.textContent = label;
+        this.formElt.appendChild(promptElt);
         // Select
+        var selectGroup = document.createElement("div");
+        selectGroup.className = "group";
+        this.formElt.appendChild(selectGroup);
         this.selectElt = document.createElement("select");
+        this.selectElt.style.width = "100%";
         for (var choiceName in choices) {
             var optionElt = document.createElement("option");
             optionElt.value = choiceName;
@@ -218,7 +249,7 @@ var SelectDialog = (function (_super) {
         }
         if (options.size != null)
             this.selectElt.size = options.size;
-        this.formElt.appendChild(this.selectElt);
+        selectGroup.appendChild(this.selectElt);
         this.selectElt.addEventListener("keydown", function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
@@ -254,17 +285,17 @@ var SelectDialog = (function (_super) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SelectDialog;
 
-},{"./BaseDialog":1}],6:[function(require,module,exports){
+},{"./BaseDialog":1}],6:[function(_dereq_,module,exports){
 /* tslint:disable:no-unused-variable */
-var BaseDialog_1 = require("./BaseDialog");
+var BaseDialog_1 = _dereq_("./BaseDialog");
 exports.BaseDialog = BaseDialog_1.default;
-var PromptDialog_1 = require("./PromptDialog");
+var PromptDialog_1 = _dereq_("./PromptDialog");
 exports.PromptDialog = PromptDialog_1.default;
-var ConfirmDialog_1 = require("./ConfirmDialog");
+var ConfirmDialog_1 = _dereq_("./ConfirmDialog");
 exports.ConfirmDialog = ConfirmDialog_1.default;
-var InfoDialog_1 = require("./InfoDialog");
+var InfoDialog_1 = _dereq_("./InfoDialog");
 exports.InfoDialog = InfoDialog_1.default;
-var SelectDialog_1 = require("./SelectDialog");
+var SelectDialog_1 = _dereq_("./SelectDialog");
 exports.SelectDialog = SelectDialog_1.default;
 /* tslint:enable:no-unused-variable */
 function cancelDialogIfAny() {
