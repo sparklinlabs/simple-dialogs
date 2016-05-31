@@ -11,20 +11,25 @@ html
         a(href="https://github.com/sparklinlabs/simple-dialogs") simple-dialogs
       p Non-blocking HTML5 dialogs
     main
-      button.confirm Confirm
+      button.confirm(title="Ctrl+Q") Confirm
       button.info Info
       button.prompt Prompt
       button.select Select
+
+      textarea
+
     script.
       var confirmElt = document.querySelector("button.confirm");
-      confirmElt.addEventListener("click", function() {
+      confirmElt.addEventListener("click", confirm);
+
+      function confirm() {
         var confirmOptions = {
           header: "Weather postcast",
           validationLabel: "Yes",
           cancelLabel: "No"
         }
         new SimpleDialogs.ConfirmDialog("Is it rainy today?", confirmOptions, function(result) { console.log(result); })
-      })
+      }
 
       var infoElt = document.querySelector("button.info");
       infoElt.addEventListener("click", function() {
@@ -58,4 +63,8 @@ html
           size: 4
         }
         new SimpleDialogs.SelectDialog("How much fun did I have building this demo?", selectChoices, selectOptions, function(result) { console.log(result); })
+      })
+      
+      document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 81 && event.ctrlKey) confirm();
       })

@@ -10,6 +10,8 @@ abstract class BaseDialog<T> {
     "close": "Close"
   };
 
+  private focusedElt = document.activeElement as HTMLElement;
+
   constructor(private callback: (result: T) => any) {
     if (BaseDialog.activeDialog != null) throw new Error("Cannot open two dialogs at the same time.");
 
@@ -56,6 +58,7 @@ abstract class BaseDialog<T> {
     BaseDialog.activeDialog = null;
     document.body.removeChild(this.dialogElt);
     document.removeEventListener("keydown", this.onDocumentKeyDown);
+    this.focusedElt.focus();
   }
 }
 
