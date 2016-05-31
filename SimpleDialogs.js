@@ -3,6 +3,7 @@ var BaseDialog = (function () {
     function BaseDialog(callback) {
         var _this = this;
         this.callback = callback;
+        this.focusedElt = document.activeElement;
         this.onDocumentKeyDown = function (event) {
             if (event.keyCode === 27) {
                 event.preventDefault();
@@ -44,6 +45,7 @@ var BaseDialog = (function () {
         BaseDialog.activeDialog = null;
         document.body.removeChild(this.dialogElt);
         document.removeEventListener("keydown", this.onDocumentKeyDown);
+        this.focusedElt.focus();
     };
     BaseDialog.defaultLabels = {
         "validate": "Validate",
