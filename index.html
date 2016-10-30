@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="index.css"><script src="SimpleDialogs.js"></script></head><body><header><h1><a href="https://github.com/sparklinlabs">sparklinlabs</a> / <a href="https://github.com/sparklinlabs/simple-dialogs">simple-dialogs</a></h1><p>Non-blocking HTML5 dialogs</p></header><main><button title="Ctrl+Q" class="confirm">Confirm</button><button class="info">Info</button><button class="prompt">Prompt</button><button class="select">Select</button><textarea></textarea></main><script>var confirmElt = document.querySelector("button.confirm");
+<!DOCTYPE html><html><head><link rel="stylesheet" href="index.css"><script src="SimpleDialogs.js"></script></head><body><header><h1><a href="https://github.com/sparklinlabs">sparklinlabs</a> / <a href="https://github.com/sparklinlabs/simple-dialogs">simple-dialogs</a></h1><p>Non-blocking HTML5 dialogs</p></header><main><button class="confirm" title="Ctrl+Q">Confirm</button><button class="info">Info</button><button class="prompt">Prompt</button><button class="select">Select</button></main><script>var confirmElt = document.querySelector("button.confirm");
 confirmElt.addEventListener("click", confirm);
 
 function confirm() {
@@ -45,5 +45,5 @@ selectElt.addEventListener("click", function() {
 })
 
 document.addEventListener("keydown", function(event) {
-  if (event.keyCode === 81 && event.ctrlKey) confirm();
+  if (event.keyCode === 81 /* Q */ && event.ctrlKey) confirm();
 })</script></body></html>

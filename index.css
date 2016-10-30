@@ -71,8 +71,7 @@ main button {
   margin-bottom: 0.5em;
 }
 .dialog input,
-.dialog select,
-.dialog textarea {
+.dialog select {
   padding: 0.125em 0.25em;
 }
 .dialog .buttons {
