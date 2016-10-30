@@ -1,7 +1,7 @@
 {
   "name": "simple-dialogs",
   "description": "Non-blocking HTML5 dialogs",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "Nicolas Gauthier <nicolas.gauthier84@gmail.com>",
   "repository": {
     "type": "git",
@@ -26,11 +26,11 @@
     "alert"
   ],
   "devDependencies": {
-    "http-server": "~0.9.0",
-    "jade": "~1.11.0",
-    "stylus": "~0.53.0",
-    "typescript": "~1.7.5",
-    "watchify": "~3.7.0",
-    "browserify-derequire": "~0.9.4"
+    "browserify-derequire": "^0.9.4",
+    "http-server": "^0.9.0",
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "^0.54.5",
+    "typescript": "^2.0.6",
+    "watchify": "^3.7.0"
   }
 }

@@ -56,4 +56,6 @@ declare namespace SimpleDialogs {
   }
 }
 
-export = SimpleDialogs;
+declare module "simple-dialogs" {
+  export = SimpleDialogs;
+}
