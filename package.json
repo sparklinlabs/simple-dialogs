@@ -26,11 +26,11 @@
     "alert"
   ],
   "devDependencies": {
-    "browserify-derequire": "^0.9.4",
-    "http-server": "^0.9.0",
+    "browserify-derequire": "^1.0.0",
+    "http-server": "^0.11.1",
     "pug-cli": "^1.0.0-alpha6",
     "stylus": "^0.54.5",
-    "typescript": "^2.0.6",
-    "watchify": "^3.7.0"
+    "typescript": "^3.3.3333",
+    "watchify": "^3.11.1"
   }
 }
