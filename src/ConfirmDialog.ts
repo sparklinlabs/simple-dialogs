@@ -4,8 +4,11 @@ interface ConfirmOptions {
   header?: string;
   validationLabel?: string;
   cancelLabel?: string;
+  checkboxLabel?: string;
 }
 type ConfirmResult = boolean;
+
+let checkboxNextId = 0;
 
 export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
   constructor(label: string, options?: ConfirmOptions, callback?: (confirmed: ConfirmResult) => void) {
@@ -23,6 +26,26 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
     promptElt.textContent = label;
     this.formElt.appendChild(promptElt);
 
+    // Checkbox
+    if (options.checkboxLabel != null) {
+      const checkboxContainerElt = document.createElement("div");
+      checkboxContainerElt.classList.add("group");
+      checkboxContainerElt.classList.add("checkbox");
+      this.formElt.appendChild(checkboxContainerElt);
+
+      const checkboxElt = document.createElement("input");
+      checkboxElt.id = `simpleDialogsConfirmCheckbox${checkboxNextId++}`;
+      checkboxElt.type = "checkbox";
+      checkboxContainerElt.appendChild(checkboxElt);
+
+      const labelElt = document.createElement("label");
+      labelElt.htmlFor = checkboxElt.id;
+      labelElt.textContent = options.checkboxLabel;
+      checkboxContainerElt.appendChild(labelElt);
+
+      checkboxElt.addEventListener("change", () => { this.validateButtonElt.disabled = !checkboxElt.checked; });
+    }
+
     // Buttons
     const buttonsElt = document.createElement("div");
     buttonsElt.className = "buttons";
@@ -37,6 +60,9 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
     this.validateButtonElt = document.createElement("button");
     this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog.defaultLabels.validate;
     this.validateButtonElt.className = "validate-button";
+
+    // If there is a checkbox, disable Validate button until checkbox is checked
+    this.validateButtonElt.disabled = options.checkboxLabel != null;
 
     if (navigator.platform === "Win32") {
       buttonsElt.appendChild(this.validateButtonElt);
