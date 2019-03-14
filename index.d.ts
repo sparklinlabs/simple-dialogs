@@ -15,8 +15,10 @@ declare namespace SimpleDialogs {
   }
 
   interface ConfirmOptions {
+    header?: string;
     validationLabel?: string;
     cancelLabel?: string;
+    checkboxLabel?: string;
   }
   type ConfirmResult = boolean;
   export class ConfirmDialog extends BaseDialog<ConfirmResult> {
@@ -24,6 +26,7 @@ declare namespace SimpleDialogs {
   }
 
   interface InfoOptions {
+    header?: string;
     closeLabel?: string;
   }
   export class InfoDialog extends BaseDialog<any> {
@@ -31,6 +34,7 @@ declare namespace SimpleDialogs {
   }
 
   interface PromptOptions {
+    header?: string;
     validationLabel?: string;
     cancelLabel?: string;
     type?: string;
@@ -46,6 +50,7 @@ declare namespace SimpleDialogs {
   }
 
   interface SelectOptions {
+    header?: string;
     validationLabel?: string;
     cancelLabel?: string;
     size?: number;
