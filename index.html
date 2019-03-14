@@ -1,49 +1,62 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="index.css"><script src="SimpleDialogs.js"></script></head><body><header><h1><a href="https://github.com/sparklinlabs">sparklinlabs</a> / <a href="https://github.com/sparklinlabs/simple-dialogs">simple-dialogs</a></h1><p>Non-blocking HTML5 dialogs</p></header><main><button class="confirm" title="Ctrl+Q">Confirm</button><button class="info">Info</button><button class="prompt">Prompt</button><button class="select">Select</button></main><script>var confirmElt = document.querySelector("button.confirm");
+<!DOCTYPE html><html><head><link rel="stylesheet" href="index.css"><script src="SimpleDialogs.js"></script></head><body><header><h1><a href="https://github.com/sparklinlabs">sparklinlabs</a> / <a href="https://github.com/sparklinlabs/simple-dialogs">simple-dialogs</a></h1><p>Non-blocking HTML5 dialogs</p></header><main><button class="confirm" title="Ctrl+Q">Confirm</button><button class="confirmWithCheckbox">Confirm with checkbox</button><button class="info">Info</button><button class="prompt">Prompt</button><button class="select">Select</button></main><script>const confirmElt = document.querySelector("button.confirm");
 confirmElt.addEventListener("click", confirm);
 
 function confirm() {
-  var confirmOptions = {
+  const confirmOptions = {
     header: "Weather postcast",
     validationLabel: "Yes",
     cancelLabel: "No"
-  }
+  };
   new SimpleDialogs.ConfirmDialog("Is it rainy today?", confirmOptions, function(result) { console.log(result); })
-}
+};
 
-var infoElt = document.querySelector("button.info");
+const confirmWithCheckboxElt = document.querySelector("button.confirmWithCheckbox");
+confirmWithCheckboxElt.addEventListener("click", confirmWithCheckbox);
+
+function confirmWithCheckbox() {
+  const confirmOptions = {
+    header: "Universe deletion",
+    checkboxLabel: "I understand this cannot be undone.",
+    validationLabel: "Delete",
+    cancelLabel: "Nevermind",
+  };
+  new SimpleDialogs.ConfirmDialog("Delete the universe?", confirmOptions, function(result) { console.log(result); })
+};
+
+const infoElt = document.querySelector("button.info");
 infoElt.addEventListener("click", function() {
-  var infoOptions = {
+  const infoOptions = {
     header: "Compliment dispenser",
     closeLabel: "Thanks! You too!"
-  }
-  new SimpleDialogs.InfoDialog("You look stunning today!", infoOptions, function(result) { console.log(result); })
-})
+  };
+  new SimpleDialogs.InfoDialog("You look stunning today!", infoOptions, function(result) { console.log(result); });
+});
 
-var promptElt = document.querySelector("button.prompt");
+const promptElt = document.querySelector("button.prompt");
 promptElt.addEventListener("click", function() {
-  var promptOptions = {
+  const promptOptions = {
     header: "Accounting",
     validationLabel: "There you go",
     cancelLabel: "Not your concern"
-  }
-  new SimpleDialogs.PromptDialog("How many fingers do you have?", promptOptions, function(result) { console.log(result); })
-})
+  };
+  new SimpleDialogs.PromptDialog("How many fingers do you have?", promptOptions, function(result) { console.log(result); });
+});
 
-var selectElt = document.querySelector("button.select");
+const selectElt = document.querySelector("button.select");
 selectElt.addEventListener("click", function() {
-  var selectChoices = {
+  const selectChoices = {
     "little": "A little?",
     "decent": "A good amount",
     "enjoy": "You enjoyed it!",
     "tooMuch": "Wayyyy too much!"
-  }
-  var selectOptions = {
+  };
+  const selectOptions = {
     header: "Enjoyment rating",
     size: 4
-  }
-  new SimpleDialogs.SelectDialog("How much fun did I have building this demo?", selectChoices, selectOptions, function(result) { console.log(result); })
-})
+  };
+  new SimpleDialogs.SelectDialog("How much fun did I have building this demo?", selectChoices, selectOptions, function(result) { console.log(result); });
+});
 
 document.addEventListener("keydown", function(event) {
-  if (event.keyCode === 81 /* Q */ && event.ctrlKey) confirm();
-})</script></body></html>
+  if (event.keyCode === 81 && event.ctrlKey) confirm();
+});</script></body></html>

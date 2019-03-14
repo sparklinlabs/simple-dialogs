@@ -36,12 +36,12 @@ main {
   background-color: #fff;
   border: 1px solid #888;
   flex: 1;
-  margin: 0 1em;
+  margin: 0 1em 1em 1em;
   padding: 1em;
   overflow-y: auto;
 }
 main button {
-  margin-right: 2em;
+  margin-right: 1em;
 }
 .dialog {
   width: 100%;
@@ -69,6 +69,11 @@ main button {
 }
 .dialog .group {
   margin-bottom: 0.5em;
+}
+.dialog .checkbox {
+  display: flex;
+  background: #eee;
+  padding: 0.5em;
 }
 .dialog input,
 .dialog select {

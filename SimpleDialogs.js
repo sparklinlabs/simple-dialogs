@@ -1,6 +1,7 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.SimpleDialogs = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.SimpleDialogs = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
 "use strict";
-var BaseDialog = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var BaseDialog = /** @class */ (function () {
     function BaseDialog(callback) {
         var _this = this;
         this.callback = callback;
@@ -55,245 +56,297 @@ var BaseDialog = (function () {
     };
     return BaseDialog;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = BaseDialog;
 
 },{}],2:[function(_dereq_,module,exports){
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var BaseDialog_1 = _dereq_("./BaseDialog");
-var ConfirmDialog = (function (_super) {
+var checkboxNextId = 0;
+var ConfirmDialog = /** @class */ (function (_super) {
     __extends(ConfirmDialog, _super);
     function ConfirmDialog(label, options, callback) {
-        var _this = this;
-        _super.call(this, callback);
+        var _this = _super.call(this, callback) || this;
         if (options == null)
             options = {};
         if (options.header != null) {
             var header = document.createElement("header");
             header.textContent = options.header;
-            this.formElt.appendChild(header);
+            _this.formElt.appendChild(header);
         }
         var promptElt = document.createElement("div");
         promptElt.className = "group";
         promptElt.textContent = label;
-        this.formElt.appendChild(promptElt);
+        _this.formElt.appendChild(promptElt);
+        // Checkbox
+        if (options.checkboxLabel != null) {
+            var checkboxContainerElt = document.createElement("div");
+            checkboxContainerElt.classList.add("group");
+            checkboxContainerElt.classList.add("checkbox");
+            _this.formElt.appendChild(checkboxContainerElt);
+            var checkboxElt_1 = document.createElement("input");
+            checkboxElt_1.id = "simpleDialogsConfirmCheckbox" + checkboxNextId++;
+            checkboxElt_1.type = "checkbox";
+            checkboxContainerElt.appendChild(checkboxElt_1);
+            var labelElt = document.createElement("label");
+            labelElt.htmlFor = checkboxElt_1.id;
+            labelElt.textContent = options.checkboxLabel;
+            checkboxContainerElt.appendChild(labelElt);
+            checkboxElt_1.addEventListener("change", function () { _this.validateButtonElt.disabled = !checkboxElt_1.checked; });
+        }
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
-        this.formElt.appendChild(buttonsElt);
+        _this.formElt.appendChild(buttonsElt);
         var cancelButtonElt = document.createElement("button");
         cancelButtonElt.type = "button";
         cancelButtonElt.textContent = options.cancelLabel != null ? options.cancelLabel : BaseDialog_1.default.defaultLabels.cancel;
         cancelButtonElt.className = "cancel-button";
         cancelButtonElt.addEventListener("click", function (event) { event.preventDefault(); _this.cancel(); });
-        this.validateButtonElt = document.createElement("button");
-        this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
-        this.validateButtonElt.className = "validate-button";
+        _this.validateButtonElt = document.createElement("button");
+        _this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
+        _this.validateButtonElt.className = "validate-button";
+        // If there is a checkbox, disable Validate button until checkbox is checked
+        _this.validateButtonElt.disabled = options.checkboxLabel != null;
         if (navigator.platform === "Win32") {
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
             buttonsElt.appendChild(cancelButtonElt);
         }
         else {
             buttonsElt.appendChild(cancelButtonElt);
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
         }
-        this.validateButtonElt.focus();
+        _this.validateButtonElt.focus();
+        return _this;
     }
     ConfirmDialog.prototype.submit = function () { _super.prototype.submit.call(this, true); };
     ConfirmDialog.prototype.cancel = function () { _super.prototype.cancel.call(this, false); };
     return ConfirmDialog;
 }(BaseDialog_1.default));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ConfirmDialog;
 
 },{"./BaseDialog":1}],3:[function(_dereq_,module,exports){
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var BaseDialog_1 = _dereq_("./BaseDialog");
-var InfoDialog = (function (_super) {
+var InfoDialog = /** @class */ (function (_super) {
     __extends(InfoDialog, _super);
     function InfoDialog(label, options, callback) {
-        _super.call(this, callback);
+        var _this = _super.call(this, callback) || this;
         if (options == null)
             options = {};
         if (options.header != null) {
             var header = document.createElement("header");
             header.textContent = options.header;
-            this.formElt.appendChild(header);
+            _this.formElt.appendChild(header);
         }
         var promptElt = document.createElement("div");
         promptElt.className = "group";
         promptElt.textContent = label;
-        this.formElt.appendChild(promptElt);
+        _this.formElt.appendChild(promptElt);
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
-        this.formElt.appendChild(buttonsElt);
-        this.validateButtonElt = document.createElement("button");
-        this.validateButtonElt.textContent = options.closeLabel != null ? options.closeLabel : BaseDialog_1.default.defaultLabels.close;
-        this.validateButtonElt.className = "validate-button";
-        buttonsElt.appendChild(this.validateButtonElt);
-        this.validateButtonElt.focus();
+        _this.formElt.appendChild(buttonsElt);
+        _this.validateButtonElt = document.createElement("button");
+        _this.validateButtonElt.textContent = options.closeLabel != null ? options.closeLabel : BaseDialog_1.default.defaultLabels.close;
+        _this.validateButtonElt.className = "validate-button";
+        buttonsElt.appendChild(_this.validateButtonElt);
+        _this.validateButtonElt.focus();
+        return _this;
     }
     return InfoDialog;
 }(BaseDialog_1.default));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = InfoDialog;
 
 },{"./BaseDialog":1}],4:[function(_dereq_,module,exports){
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var BaseDialog_1 = _dereq_("./BaseDialog");
-var PromptDialog = (function (_super) {
+var PromptDialog = /** @class */ (function (_super) {
     __extends(PromptDialog, _super);
     function PromptDialog(label, options, callback) {
-        var _this = this;
-        _super.call(this, callback);
+        var _this = _super.call(this, callback) || this;
         if (options == null)
             options = {};
         if (options.header != null) {
             var header = document.createElement("header");
             header.textContent = options.header;
-            this.formElt.appendChild(header);
+            _this.formElt.appendChild(header);
         }
         var promptElt = document.createElement("div");
         promptElt.className = "group";
         promptElt.textContent = label;
-        this.formElt.appendChild(promptElt);
+        _this.formElt.appendChild(promptElt);
         var inputGroup = document.createElement("div");
         inputGroup.className = "group";
-        this.formElt.appendChild(inputGroup);
-        this.inputElt = document.createElement("input");
-        this.inputElt.style.width = "100%";
+        _this.formElt.appendChild(inputGroup);
+        _this.inputElt = document.createElement("input");
+        _this.inputElt.style.width = "100%";
         if (options.type != null)
-            this.inputElt.type = options.type;
+            _this.inputElt.type = options.type;
         if (options.initialValue != null)
-            this.inputElt.value = options.initialValue;
+            _this.inputElt.value = options.initialValue;
         if (options.placeholder != null)
-            this.inputElt.placeholder = options.placeholder;
+            _this.inputElt.placeholder = options.placeholder;
         if (options.pattern != null)
-            this.inputElt.pattern = options.pattern;
+            _this.inputElt.pattern = options.pattern;
         if (options.title != null)
-            this.inputElt.title = options.title;
-        this.inputElt.required = (options.required != null) ? options.required : true;
-        inputGroup.appendChild(this.inputElt);
+            _this.inputElt.title = options.title;
+        _this.inputElt.required = (options.required != null) ? options.required : true;
+        inputGroup.appendChild(_this.inputElt);
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
-        this.formElt.appendChild(buttonsElt);
+        _this.formElt.appendChild(buttonsElt);
         var cancelButtonElt = document.createElement("button");
         cancelButtonElt.type = "button";
         cancelButtonElt.textContent = options.cancelLabel != null ? options.cancelLabel : BaseDialog_1.default.defaultLabels.cancel;
         cancelButtonElt.className = "cancel-button";
         cancelButtonElt.addEventListener("click", function (event) { event.preventDefault(); _this.cancel(); });
-        this.validateButtonElt = document.createElement("button");
-        this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
-        this.validateButtonElt.className = "validate-button";
+        _this.validateButtonElt = document.createElement("button");
+        _this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
+        _this.validateButtonElt.className = "validate-button";
         if (navigator.platform === "Win32") {
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
             buttonsElt.appendChild(cancelButtonElt);
         }
         else {
             buttonsElt.appendChild(cancelButtonElt);
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
         }
-        this.inputElt.select();
+        _this.inputElt.select();
+        return _this;
     }
     PromptDialog.prototype.submit = function () { _super.prototype.submit.call(this, this.inputElt.value); };
     return PromptDialog;
 }(BaseDialog_1.default));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = PromptDialog;
 
 },{"./BaseDialog":1}],5:[function(_dereq_,module,exports){
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var BaseDialog_1 = _dereq_("./BaseDialog");
-var SelectDialog = (function (_super) {
+var SelectDialog = /** @class */ (function (_super) {
     __extends(SelectDialog, _super);
     function SelectDialog(label, choices, options, callback) {
-        var _this = this;
-        _super.call(this, callback);
+        var _this = _super.call(this, callback) || this;
         if (options == null)
             options = {};
         if (options.header != null) {
             var header = document.createElement("header");
             header.textContent = options.header;
-            this.formElt.appendChild(header);
+            _this.formElt.appendChild(header);
         }
         var promptElt = document.createElement("div");
         promptElt.className = "group";
         promptElt.textContent = label;
-        this.formElt.appendChild(promptElt);
+        _this.formElt.appendChild(promptElt);
         // Select
         var selectGroup = document.createElement("div");
         selectGroup.className = "group";
-        this.formElt.appendChild(selectGroup);
-        this.selectElt = document.createElement("select");
-        this.selectElt.style.width = "100%";
+        _this.formElt.appendChild(selectGroup);
+        _this.selectElt = document.createElement("select");
+        _this.selectElt.style.width = "100%";
         for (var choiceName in choices) {
             var optionElt = document.createElement("option");
             optionElt.value = choiceName;
             optionElt.textContent = choices[choiceName];
-            this.selectElt.appendChild(optionElt);
+            _this.selectElt.appendChild(optionElt);
         }
         if (options.size != null)
-            this.selectElt.size = options.size;
-        selectGroup.appendChild(this.selectElt);
-        this.selectElt.addEventListener("keydown", function (event) {
+            _this.selectElt.size = options.size;
+        selectGroup.appendChild(_this.selectElt);
+        _this.selectElt.addEventListener("keydown", function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 _this.submit();
             }
         });
-        this.selectElt.addEventListener("dblclick", function () { _this.submit(); });
+        _this.selectElt.addEventListener("dblclick", function () { _this.submit(); });
         // Buttons
         var buttonsElt = document.createElement("div");
         buttonsElt.className = "buttons";
-        this.formElt.appendChild(buttonsElt);
+        _this.formElt.appendChild(buttonsElt);
         var cancelButtonElt = document.createElement("button");
         cancelButtonElt.type = "button";
         cancelButtonElt.textContent = options.cancelLabel != null ? options.cancelLabel : BaseDialog_1.default.defaultLabels.cancel;
         cancelButtonElt.className = "cancel-button";
         cancelButtonElt.addEventListener("click", function (event) { event.preventDefault(); _this.cancel(); });
-        this.validateButtonElt = document.createElement("button");
-        this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
-        this.validateButtonElt.className = "validate-button";
+        _this.validateButtonElt = document.createElement("button");
+        _this.validateButtonElt.textContent = options.validationLabel != null ? options.validationLabel : BaseDialog_1.default.defaultLabels.validate;
+        _this.validateButtonElt.className = "validate-button";
         if (navigator.platform === "Win32") {
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
             buttonsElt.appendChild(cancelButtonElt);
         }
         else {
             buttonsElt.appendChild(cancelButtonElt);
-            buttonsElt.appendChild(this.validateButtonElt);
+            buttonsElt.appendChild(_this.validateButtonElt);
         }
-        this.selectElt.focus();
+        _this.selectElt.focus();
+        return _this;
     }
     SelectDialog.prototype.submit = function () { _super.prototype.submit.call(this, (this.selectElt.value !== "") ? this.selectElt.value : null); };
     return SelectDialog;
 }(BaseDialog_1.default));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SelectDialog;
 
 },{"./BaseDialog":1}],6:[function(_dereq_,module,exports){
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable:no-unused-variable */
 var BaseDialog_1 = _dereq_("./BaseDialog");
 exports.BaseDialog = BaseDialog_1.default;
@@ -305,7 +358,6 @@ var InfoDialog_1 = _dereq_("./InfoDialog");
 exports.InfoDialog = InfoDialog_1.default;
 var SelectDialog_1 = _dereq_("./SelectDialog");
 exports.SelectDialog = SelectDialog_1.default;
-/* tslint:enable:no-unused-variable */
 function cancelDialogIfAny() {
     if (BaseDialog_1.default.activeDialog != null)
         BaseDialog_1.default.activeDialog.cancel();
