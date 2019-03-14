@@ -1,5 +1,7 @@
 "use strict";
 
+const fs = require("fs");
+
 const spawn = require("child_process").spawn;
 const spawnOptions = { stdio: "inherit" };
 const suffix = (process.platform === "win32") ? ".cmd" : "";
