@@ -27,13 +27,15 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
     this.formElt.appendChild(promptElt);
 
     // Checkbox
+    let checkboxElt: HTMLInputElement = null;
+
     if (options.checkboxLabel != null) {
       const checkboxContainerElt = document.createElement("div");
       checkboxContainerElt.classList.add("group");
       checkboxContainerElt.classList.add("checkbox");
       this.formElt.appendChild(checkboxContainerElt);
 
-      const checkboxElt = document.createElement("input");
+      checkboxElt = document.createElement("input");
       checkboxElt.id = `simpleDialogsConfirmCheckbox${checkboxNextId++}`;
       checkboxElt.type = "checkbox";
       checkboxContainerElt.appendChild(checkboxElt);
@@ -62,7 +64,6 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
     this.validateButtonElt.className = "validate-button";
 
     // If there is a checkbox, disable Validate button until checkbox is checked
-    this.validateButtonElt.disabled = options.checkboxLabel != null;
 
     if (navigator.platform === "Win32") {
       buttonsElt.appendChild(this.validateButtonElt);
@@ -72,7 +73,12 @@ export default class ConfirmDialog extends BaseDialog<ConfirmResult> {
       buttonsElt.appendChild(this.validateButtonElt);
     }
 
-    this.validateButtonElt.focus();
+    if (options.checkboxLabel != null) {
+      this.validateButtonElt.disabled = options.checkboxLabel != null;
+      checkboxElt.focus();
+    } else {
+      this.validateButtonElt.focus();
+    }
   }
 
   submit() { super.submit(true); }
