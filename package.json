@@ -1,7 +1,7 @@
 {
   "name": "simple-dialogs",
   "description": "Non-blocking HTML5 dialogs",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "Nicolas Gauthier <nicolas.gauthier84@gmail.com>",
   "repository": {
     "type": "git",
